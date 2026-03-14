@@ -15,6 +15,11 @@ abstract class UserProfile with _$UserProfile {
     String? email,
     @Default(false) bool isVerified,
     String? businessName,
+    String? gstNumber,
+    String? businessAddress,
+    String? description,
+    String? profileImageUrl,
+    DateTime? registrationDate,
     @Default(0.0) double rating,
     @Default([]) List<String> serviceArea, // Cities/Areas for dealer
     @Default([]) List<String> categoriesHandled, // For dealer

@@ -77,9 +77,57 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 onPressed: () => context.go(AppRoutes.register),
                 child: const Text('Don\'t have an account? Register', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
               ),
+              const SizedBox(height: 24),
+              const Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    child: Text('OR', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                  ),
+                  Expanded(child: Divider()),
+                ],
+              ),
+              const SizedBox(height: 24),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.account_circle_outlined, color: AppColors.primary),
+                label: const Text('Continue with Google'),
+                onPressed: () => ref.read(authControllerProvider.notifier).loginWithGoogle(),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.phone_android, color: AppColors.primary),
+                label: const Text('Continue with Phone Number'),
+                onPressed: () => _showPhoneLoginDialog(context, ref),
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showPhoneLoginDialog(BuildContext context, WidgetRef ref) {
+    final phoneController = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Phone Login'),
+        content: TextField(
+          controller: phoneController,
+          decoration: const InputDecoration(labelText: 'Phone Number', hintText: '+91 XXXXX XXXXX'),
+          keyboardType: TextInputType.phone,
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          ElevatedButton(
+            onPressed: () {
+              ref.read(authControllerProvider.notifier).loginWithPhone(phoneController.text);
+              Navigator.pop(context);
+            },
+            child: const Text('Next'),
+          ),
+        ],
       ),
     );
   }

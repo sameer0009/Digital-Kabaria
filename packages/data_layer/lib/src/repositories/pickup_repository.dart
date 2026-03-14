@@ -23,4 +23,14 @@ class PickupRepository {
         .snapshots()
         .map((snapshot) => snapshot.docs.map((doc) => PickupOrder.fromJson(doc.data() as Map<String, dynamic>)).toList());
   }
+
+  Stream<PickupOrder?> watchListingPickup(String listingId) {
+    return _pickups
+        .where('listingId', isEqualTo: listingId)
+        .limit(1)
+        .snapshots()
+        .map((snapshot) => snapshot.docs.isNotEmpty 
+            ? PickupOrder.fromJson(snapshot.docs.first.data() as Map<String, dynamic>) 
+            : null);
+  }
 }

@@ -4,6 +4,7 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String onboarding = '/onboarding';
+  static const String portfolio = '/portfolio/:id';
   
   // Seller Mobile
   static const String sellerHome = '/seller';

@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'pickup_order.freezed.dart';
 part 'pickup_order.g.dart';
 
-enum PickupStatus { awaitingSchedule, scheduled, enRoute, arrived, pickedUp, completed, cancelled }
+enum PickupStatus { awaitingSchedule, scheduled, enRoute, arrived, pickedUp, completed, cancelled, disputed, paymentFailed }
 
 @freezed
 abstract class PickupOrder with _$PickupOrder {
@@ -17,7 +17,8 @@ abstract class PickupOrder with _$PickupOrder {
     String? scheduledTime,
     double? actualWeight,
     double? finalAmount,
-    @Default([]) List<String> otpTokens,
+    String? otpCode,
+    String? ratingId,
     DateTime? createdAt,
   }) = _PickupOrder;
 

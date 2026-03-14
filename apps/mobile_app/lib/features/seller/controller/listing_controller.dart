@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:domain_models/domain_models.dart';
@@ -62,7 +63,8 @@ class ListingController extends AsyncNotifier<void> {
     state = await AsyncValue.guard(() async {
       final orderId = const Uuid().v4();
       
-      // 1. Create Pickup Order
+      // 1. Create Pickup Order with OTP
+      final otp = (1000 + Random().nextInt(9000)).toString();
       final order = PickupOrder(
         id: orderId,
         listingId: listing.id,
@@ -70,6 +72,7 @@ class ListingController extends AsyncNotifier<void> {
         sellerId: listing.sellerId,
         dealerId: quote.dealerId,
         status: PickupStatus.scheduled,
+        otpCode: otp,
         createdAt: DateTime.now(),
       );
       await ref.read(pickupRepositoryProvider).createPickup(order);

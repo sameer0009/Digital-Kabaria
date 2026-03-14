@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
@@ -27,5 +28,17 @@ class AuthRepository {
 
   Future<void> signOut() async {
     await _auth.signOut();
+  }
+
+  Future<void> signInWithGoogle() async {
+    // TODO: Implement actual Google SignIn with google_sign_in package
+    // For now, this is a stub for UI wiring
+    debugPrint('Google Sign-In Triggered');
+  }
+
+  Future<void> signInWithPhone(String phoneNumber) async {
+    // TODO: Implement actual Firebase Phone Auth (verifyPhoneNumber)
+    // For now, this is a stub for UI wiring
+    debugPrint('Phone Sign-In Triggered for $phoneNumber');
   }
 }

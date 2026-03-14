@@ -18,9 +18,8 @@ _PickupOrder _$PickupOrderFromJson(Map<String, dynamic> json) => _PickupOrder(
   scheduledTime: json['scheduledTime'] as String?,
   actualWeight: (json['actualWeight'] as num?)?.toDouble(),
   finalAmount: (json['finalAmount'] as num?)?.toDouble(),
-  otpTokens:
-      (json['otpTokens'] as List<dynamic>?)?.map((e) => e as String).toList() ??
-      const [],
+  otpCode: json['otpCode'] as String?,
+  ratingId: json['ratingId'] as String?,
   createdAt: json['createdAt'] == null
       ? null
       : DateTime.parse(json['createdAt'] as String),
@@ -37,7 +36,8 @@ Map<String, dynamic> _$PickupOrderToJson(_PickupOrder instance) =>
       'scheduledTime': instance.scheduledTime,
       'actualWeight': instance.actualWeight,
       'finalAmount': instance.finalAmount,
-      'otpTokens': instance.otpTokens,
+      'otpCode': instance.otpCode,
+      'ratingId': instance.ratingId,
       'createdAt': instance.createdAt?.toIso8601String(),
     };
 
@@ -49,4 +49,6 @@ const _$PickupStatusEnumMap = {
   PickupStatus.pickedUp: 'pickedUp',
   PickupStatus.completed: 'completed',
   PickupStatus.cancelled: 'cancelled',
+  PickupStatus.disputed: 'disputed',
+  PickupStatus.paymentFailed: 'paymentFailed',
 };

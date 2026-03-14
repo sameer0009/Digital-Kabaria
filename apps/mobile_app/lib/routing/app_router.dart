@@ -12,6 +12,7 @@ import '../features/seller/presentation/seller_pickup_tracking_screen.dart';
 import '../features/dealer/presentation/dealer_home_screen.dart';
 import '../features/dealer/presentation/dealer_listing_detail_screen.dart';
 import '../features/dealer/presentation/dealer_jobs_screen.dart';
+import '../features/profile/presentation/user_portfolio_screen.dart';
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authStateChangesProvider);
@@ -52,6 +53,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.register,
         builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.portfolio,
+        builder: (context, state) => UserPortfolioScreen(userId: state.pathParameters['id']!),
       ),
       GoRoute(
         path: AppRoutes.sellerHome,

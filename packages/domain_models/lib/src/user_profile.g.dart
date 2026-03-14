@@ -14,6 +14,13 @@ _UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => _UserProfile(
   email: json['email'] as String?,
   isVerified: json['isVerified'] as bool? ?? false,
   businessName: json['businessName'] as String?,
+  gstNumber: json['gstNumber'] as String?,
+  businessAddress: json['businessAddress'] as String?,
+  description: json['description'] as String?,
+  profileImageUrl: json['profileImageUrl'] as String?,
+  registrationDate: json['registrationDate'] == null
+      ? null
+      : DateTime.parse(json['registrationDate'] as String),
   rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
   serviceArea:
       (json['serviceArea'] as List<dynamic>?)
@@ -36,6 +43,11 @@ Map<String, dynamic> _$UserProfileToJson(_UserProfile instance) =>
       'email': instance.email,
       'isVerified': instance.isVerified,
       'businessName': instance.businessName,
+      'gstNumber': instance.gstNumber,
+      'businessAddress': instance.businessAddress,
+      'description': instance.description,
+      'profileImageUrl': instance.profileImageUrl,
+      'registrationDate': instance.registrationDate?.toIso8601String(),
       'rating': instance.rating,
       'serviceArea': instance.serviceArea,
       'categoriesHandled': instance.categoriesHandled,

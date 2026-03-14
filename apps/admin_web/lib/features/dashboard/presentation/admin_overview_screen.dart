@@ -20,6 +20,8 @@ class AdminOverviewScreen extends StatelessWidget {
               _buildKpiCard('Active Listings', '28', AppColors.secondary),
               const SizedBox(width: 16),
               _buildKpiCard('Pending Pickups', '12', Colors.blue),
+              const SizedBox(width: 16),
+              _buildKpiCard('Disputed', '2', AppColors.error),
             ],
           )
         ],

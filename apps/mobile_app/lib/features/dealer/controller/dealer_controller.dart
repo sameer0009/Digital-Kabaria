@@ -10,12 +10,24 @@ final dealerProfileProvider = StreamProvider<UserProfile?>((ref) {
   return ref.watch(userRepositoryProvider).watchProfile(uid);
 });
 
+final dealerLeadFiltersProvider = NotifierProvider<DealerLeadFilters, List<String>?>(DealerLeadFilters.new);
+
+class DealerLeadFilters extends Notifier<List<String>?> {
+  @override
+  List<String>? build() => null;
+
+  void setFilters(List<String>? categories) => state = categories;
+}
+
 final matchingLeadsProvider = StreamProvider<List<Listing>>((ref) {
   final profile = ref.watch(dealerProfileProvider).value;
-  // If profile is not yet loaded, we can still show all submitted leads or wait.
-  // For MVP, if no categories are set, show all.
+  final manualFilters = ref.watch(dealerLeadFiltersProvider);
+  
+  // Use manual filters if set, otherwise fallback to profile categories, or show all.
+  final effectiveCategories = manualFilters ?? profile?.categoriesHandled;
+  
   return ref.watch(listingRepositoryProvider).watchMatchingLeads(
-    categories: profile?.categoriesHandled,
+    categories: effectiveCategories,
   );
 });
 

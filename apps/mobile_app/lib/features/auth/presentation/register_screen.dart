@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:design_system/design_system.dart';
 import 'package:shared_core/shared_core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:domain_models/domain_models.dart';
 import '../controller/auth_controller.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
@@ -15,11 +16,20 @@ class RegisterScreen extends ConsumerStatefulWidget {
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _businessNameController = TextEditingController();
+  final _gstController = TextEditingController();
+  final _addressController = TextEditingController();
+  UserRole _selectedRole = UserRole.seller;
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _nameController.dispose();
+    _businessNameController.dispose();
+    _gstController.dispose();
+    _addressController.dispose();
     super.dispose();
   }
 
@@ -48,11 +58,52 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               const SizedBox(height: 8),
               Text('Join Digital Kabaria today', style: AppTypography.bodyMedium, textAlign: TextAlign.center),
               const SizedBox(height: 32),
+              const Text('Register As', style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  ChoiceChip(
+                    label: const Text('Seller'),
+                    selected: _selectedRole == UserRole.seller,
+                    onSelected: (val) => setState(() => _selectedRole = UserRole.seller),
+                  ),
+                  const SizedBox(width: 12),
+                  ChoiceChip(
+                    label: const Text('Dealer (B2B)'),
+                    selected: _selectedRole == UserRole.dealer,
+                    onSelected: (val) => setState(() => _selectedRole = UserRole.dealer),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: 'Full Name', hintText: 'Enter your name'),
+              ),
+              const SizedBox(height: 16),
               TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Email', hintText: 'Enter your email'),
                 keyboardType: TextInputType.emailAddress,
               ),
+              if (_selectedRole == UserRole.dealer) ...[
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _businessNameController,
+                  decoration: const InputDecoration(labelText: 'Business Name', hintText: 'e.g. Green Scrap Solutions'),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _gstController,
+                  decoration: const InputDecoration(labelText: 'GST Number', hintText: '22AAAAA0000A1Z5'),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _addressController,
+                  decoration: const InputDecoration(labelText: 'Business Address', hintText: 'Street, City, Zip'),
+                  maxLines: 2,
+                ),
+              ],
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
@@ -66,8 +117,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     : () async {
                         FocusScope.of(context).unfocus();
                         await ref.read(authControllerProvider.notifier).register(
-                              _emailController.text.trim(),
-                              _passwordController.text,
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text,
+                              name: _nameController.text.trim(),
+                              role: _selectedRole,
+                              businessName: _selectedRole == UserRole.dealer ? _businessNameController.text.trim() : null,
+                              gstNumber: _selectedRole == UserRole.dealer ? _gstController.text.trim() : null,
+                              businessAddress: _selectedRole == UserRole.dealer ? _addressController.text.trim() : null,
                             );
                       },
                 child: authState.isLoading 

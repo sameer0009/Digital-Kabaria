@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$PickupOrder {
 
- String get id; String get listingId; String get quoteId; String get sellerId; String get dealerId; PickupStatus get status; String? get scheduledTime; double? get actualWeight; double? get finalAmount; List<String> get otpTokens; DateTime? get createdAt;
+ String get id; String get listingId; String get quoteId; String get sellerId; String get dealerId; PickupStatus get status; String? get scheduledTime; double? get actualWeight; double? get finalAmount; String? get otpCode; String? get ratingId; DateTime? get createdAt;
 /// Create a copy of PickupOrder
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $PickupOrderCopyWith<PickupOrder> get copyWith => _$PickupOrderCopyWithImpl<Pick
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PickupOrder&&(identical(other.id, id) || other.id == id)&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.quoteId, quoteId) || other.quoteId == quoteId)&&(identical(other.sellerId, sellerId) || other.sellerId == sellerId)&&(identical(other.dealerId, dealerId) || other.dealerId == dealerId)&&(identical(other.status, status) || other.status == status)&&(identical(other.scheduledTime, scheduledTime) || other.scheduledTime == scheduledTime)&&(identical(other.actualWeight, actualWeight) || other.actualWeight == actualWeight)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount)&&const DeepCollectionEquality().equals(other.otpTokens, otpTokens)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PickupOrder&&(identical(other.id, id) || other.id == id)&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.quoteId, quoteId) || other.quoteId == quoteId)&&(identical(other.sellerId, sellerId) || other.sellerId == sellerId)&&(identical(other.dealerId, dealerId) || other.dealerId == dealerId)&&(identical(other.status, status) || other.status == status)&&(identical(other.scheduledTime, scheduledTime) || other.scheduledTime == scheduledTime)&&(identical(other.actualWeight, actualWeight) || other.actualWeight == actualWeight)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount)&&(identical(other.otpCode, otpCode) || other.otpCode == otpCode)&&(identical(other.ratingId, ratingId) || other.ratingId == ratingId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,listingId,quoteId,sellerId,dealerId,status,scheduledTime,actualWeight,finalAmount,const DeepCollectionEquality().hash(otpTokens),createdAt);
+int get hashCode => Object.hash(runtimeType,id,listingId,quoteId,sellerId,dealerId,status,scheduledTime,actualWeight,finalAmount,otpCode,ratingId,createdAt);
 
 @override
 String toString() {
-  return 'PickupOrder(id: $id, listingId: $listingId, quoteId: $quoteId, sellerId: $sellerId, dealerId: $dealerId, status: $status, scheduledTime: $scheduledTime, actualWeight: $actualWeight, finalAmount: $finalAmount, otpTokens: $otpTokens, createdAt: $createdAt)';
+  return 'PickupOrder(id: $id, listingId: $listingId, quoteId: $quoteId, sellerId: $sellerId, dealerId: $dealerId, status: $status, scheduledTime: $scheduledTime, actualWeight: $actualWeight, finalAmount: $finalAmount, otpCode: $otpCode, ratingId: $ratingId, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $PickupOrderCopyWith<$Res>  {
   factory $PickupOrderCopyWith(PickupOrder value, $Res Function(PickupOrder) _then) = _$PickupOrderCopyWithImpl;
 @useResult
 $Res call({
- String id, String listingId, String quoteId, String sellerId, String dealerId, PickupStatus status, String? scheduledTime, double? actualWeight, double? finalAmount, List<String> otpTokens, DateTime? createdAt
+ String id, String listingId, String quoteId, String sellerId, String dealerId, PickupStatus status, String? scheduledTime, double? actualWeight, double? finalAmount, String? otpCode, String? ratingId, DateTime? createdAt
 });
 
 
@@ -65,7 +65,7 @@ class _$PickupOrderCopyWithImpl<$Res>
 
 /// Create a copy of PickupOrder
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? listingId = null,Object? quoteId = null,Object? sellerId = null,Object? dealerId = null,Object? status = null,Object? scheduledTime = freezed,Object? actualWeight = freezed,Object? finalAmount = freezed,Object? otpTokens = null,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? listingId = null,Object? quoteId = null,Object? sellerId = null,Object? dealerId = null,Object? status = null,Object? scheduledTime = freezed,Object? actualWeight = freezed,Object? finalAmount = freezed,Object? otpCode = freezed,Object? ratingId = freezed,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,listingId: null == listingId ? _self.listingId : listingId // ignore: cast_nullable_to_non_nullable
@@ -76,8 +76,9 @@ as String,status: null == status ? _self.status : status // ignore: cast_nullabl
 as PickupStatus,scheduledTime: freezed == scheduledTime ? _self.scheduledTime : scheduledTime // ignore: cast_nullable_to_non_nullable
 as String?,actualWeight: freezed == actualWeight ? _self.actualWeight : actualWeight // ignore: cast_nullable_to_non_nullable
 as double?,finalAmount: freezed == finalAmount ? _self.finalAmount : finalAmount // ignore: cast_nullable_to_non_nullable
-as double?,otpTokens: null == otpTokens ? _self.otpTokens : otpTokens // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as double?,otpCode: freezed == otpCode ? _self.otpCode : otpCode // ignore: cast_nullable_to_non_nullable
+as String?,ratingId: freezed == ratingId ? _self.ratingId : ratingId // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }
@@ -163,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String listingId,  String quoteId,  String sellerId,  String dealerId,  PickupStatus status,  String? scheduledTime,  double? actualWeight,  double? finalAmount,  List<String> otpTokens,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String listingId,  String quoteId,  String sellerId,  String dealerId,  PickupStatus status,  String? scheduledTime,  double? actualWeight,  double? finalAmount,  String? otpCode,  String? ratingId,  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _PickupOrder() when $default != null:
-return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.dealerId,_that.status,_that.scheduledTime,_that.actualWeight,_that.finalAmount,_that.otpTokens,_that.createdAt);case _:
+return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.dealerId,_that.status,_that.scheduledTime,_that.actualWeight,_that.finalAmount,_that.otpCode,_that.ratingId,_that.createdAt);case _:
   return orElse();
 
 }
@@ -184,10 +185,10 @@ return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.deal
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String listingId,  String quoteId,  String sellerId,  String dealerId,  PickupStatus status,  String? scheduledTime,  double? actualWeight,  double? finalAmount,  List<String> otpTokens,  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String listingId,  String quoteId,  String sellerId,  String dealerId,  PickupStatus status,  String? scheduledTime,  double? actualWeight,  double? finalAmount,  String? otpCode,  String? ratingId,  DateTime? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _PickupOrder():
-return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.dealerId,_that.status,_that.scheduledTime,_that.actualWeight,_that.finalAmount,_that.otpTokens,_that.createdAt);case _:
+return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.dealerId,_that.status,_that.scheduledTime,_that.actualWeight,_that.finalAmount,_that.otpCode,_that.ratingId,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +205,10 @@ return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.deal
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String listingId,  String quoteId,  String sellerId,  String dealerId,  PickupStatus status,  String? scheduledTime,  double? actualWeight,  double? finalAmount,  List<String> otpTokens,  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String listingId,  String quoteId,  String sellerId,  String dealerId,  PickupStatus status,  String? scheduledTime,  double? actualWeight,  double? finalAmount,  String? otpCode,  String? ratingId,  DateTime? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _PickupOrder() when $default != null:
-return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.dealerId,_that.status,_that.scheduledTime,_that.actualWeight,_that.finalAmount,_that.otpTokens,_that.createdAt);case _:
+return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.dealerId,_that.status,_that.scheduledTime,_that.actualWeight,_that.finalAmount,_that.otpCode,_that.ratingId,_that.createdAt);case _:
   return null;
 
 }
@@ -219,7 +220,7 @@ return $default(_that.id,_that.listingId,_that.quoteId,_that.sellerId,_that.deal
 @JsonSerializable()
 
 class _PickupOrder implements PickupOrder {
-  const _PickupOrder({required this.id, required this.listingId, required this.quoteId, required this.sellerId, required this.dealerId, this.status = PickupStatus.awaitingSchedule, this.scheduledTime, this.actualWeight, this.finalAmount, final  List<String> otpTokens = const [], this.createdAt}): _otpTokens = otpTokens;
+  const _PickupOrder({required this.id, required this.listingId, required this.quoteId, required this.sellerId, required this.dealerId, this.status = PickupStatus.awaitingSchedule, this.scheduledTime, this.actualWeight, this.finalAmount, this.otpCode, this.ratingId, this.createdAt});
   factory _PickupOrder.fromJson(Map<String, dynamic> json) => _$PickupOrderFromJson(json);
 
 @override final  String id;
@@ -231,13 +232,8 @@ class _PickupOrder implements PickupOrder {
 @override final  String? scheduledTime;
 @override final  double? actualWeight;
 @override final  double? finalAmount;
- final  List<String> _otpTokens;
-@override@JsonKey() List<String> get otpTokens {
-  if (_otpTokens is EqualUnmodifiableListView) return _otpTokens;
-  // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_otpTokens);
-}
-
+@override final  String? otpCode;
+@override final  String? ratingId;
 @override final  DateTime? createdAt;
 
 /// Create a copy of PickupOrder
@@ -253,16 +249,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PickupOrder&&(identical(other.id, id) || other.id == id)&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.quoteId, quoteId) || other.quoteId == quoteId)&&(identical(other.sellerId, sellerId) || other.sellerId == sellerId)&&(identical(other.dealerId, dealerId) || other.dealerId == dealerId)&&(identical(other.status, status) || other.status == status)&&(identical(other.scheduledTime, scheduledTime) || other.scheduledTime == scheduledTime)&&(identical(other.actualWeight, actualWeight) || other.actualWeight == actualWeight)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount)&&const DeepCollectionEquality().equals(other._otpTokens, _otpTokens)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PickupOrder&&(identical(other.id, id) || other.id == id)&&(identical(other.listingId, listingId) || other.listingId == listingId)&&(identical(other.quoteId, quoteId) || other.quoteId == quoteId)&&(identical(other.sellerId, sellerId) || other.sellerId == sellerId)&&(identical(other.dealerId, dealerId) || other.dealerId == dealerId)&&(identical(other.status, status) || other.status == status)&&(identical(other.scheduledTime, scheduledTime) || other.scheduledTime == scheduledTime)&&(identical(other.actualWeight, actualWeight) || other.actualWeight == actualWeight)&&(identical(other.finalAmount, finalAmount) || other.finalAmount == finalAmount)&&(identical(other.otpCode, otpCode) || other.otpCode == otpCode)&&(identical(other.ratingId, ratingId) || other.ratingId == ratingId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,listingId,quoteId,sellerId,dealerId,status,scheduledTime,actualWeight,finalAmount,const DeepCollectionEquality().hash(_otpTokens),createdAt);
+int get hashCode => Object.hash(runtimeType,id,listingId,quoteId,sellerId,dealerId,status,scheduledTime,actualWeight,finalAmount,otpCode,ratingId,createdAt);
 
 @override
 String toString() {
-  return 'PickupOrder(id: $id, listingId: $listingId, quoteId: $quoteId, sellerId: $sellerId, dealerId: $dealerId, status: $status, scheduledTime: $scheduledTime, actualWeight: $actualWeight, finalAmount: $finalAmount, otpTokens: $otpTokens, createdAt: $createdAt)';
+  return 'PickupOrder(id: $id, listingId: $listingId, quoteId: $quoteId, sellerId: $sellerId, dealerId: $dealerId, status: $status, scheduledTime: $scheduledTime, actualWeight: $actualWeight, finalAmount: $finalAmount, otpCode: $otpCode, ratingId: $ratingId, createdAt: $createdAt)';
 }
 
 
@@ -273,7 +269,7 @@ abstract mixin class _$PickupOrderCopyWith<$Res> implements $PickupOrderCopyWith
   factory _$PickupOrderCopyWith(_PickupOrder value, $Res Function(_PickupOrder) _then) = __$PickupOrderCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String listingId, String quoteId, String sellerId, String dealerId, PickupStatus status, String? scheduledTime, double? actualWeight, double? finalAmount, List<String> otpTokens, DateTime? createdAt
+ String id, String listingId, String quoteId, String sellerId, String dealerId, PickupStatus status, String? scheduledTime, double? actualWeight, double? finalAmount, String? otpCode, String? ratingId, DateTime? createdAt
 });
 
 
@@ -290,7 +286,7 @@ class __$PickupOrderCopyWithImpl<$Res>
 
 /// Create a copy of PickupOrder
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? listingId = null,Object? quoteId = null,Object? sellerId = null,Object? dealerId = null,Object? status = null,Object? scheduledTime = freezed,Object? actualWeight = freezed,Object? finalAmount = freezed,Object? otpTokens = null,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? listingId = null,Object? quoteId = null,Object? sellerId = null,Object? dealerId = null,Object? status = null,Object? scheduledTime = freezed,Object? actualWeight = freezed,Object? finalAmount = freezed,Object? otpCode = freezed,Object? ratingId = freezed,Object? createdAt = freezed,}) {
   return _then(_PickupOrder(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,listingId: null == listingId ? _self.listingId : listingId // ignore: cast_nullable_to_non_nullable
@@ -301,8 +297,9 @@ as String,status: null == status ? _self.status : status // ignore: cast_nullabl
 as PickupStatus,scheduledTime: freezed == scheduledTime ? _self.scheduledTime : scheduledTime // ignore: cast_nullable_to_non_nullable
 as String?,actualWeight: freezed == actualWeight ? _self.actualWeight : actualWeight // ignore: cast_nullable_to_non_nullable
 as double?,finalAmount: freezed == finalAmount ? _self.finalAmount : finalAmount // ignore: cast_nullable_to_non_nullable
-as double?,otpTokens: null == otpTokens ? _self._otpTokens : otpTokens // ignore: cast_nullable_to_non_nullable
-as List<String>,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as double?,otpCode: freezed == otpCode ? _self.otpCode : otpCode // ignore: cast_nullable_to_non_nullable
+as String?,ratingId: freezed == ratingId ? _self.ratingId : ratingId // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
 }

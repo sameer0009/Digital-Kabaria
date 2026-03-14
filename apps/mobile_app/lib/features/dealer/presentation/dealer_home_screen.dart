@@ -4,6 +4,7 @@ import 'package:design_system/design_system.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_core/shared_core.dart';
 import '../controller/dealer_controller.dart';
+import '../../common/controller/category_controller.dart';
 
 
 class DealerHomeScreen extends ConsumerWidget {
@@ -18,21 +19,62 @@ class DealerHomeScreen extends ConsumerWidget {
         title: const Text('New Leads'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-               // KYC Profile settings stub
-            },
+            icon: const Icon(Icons.logout),
+            onPressed: () => context.go('/login'),
           ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {
-              // Filters stub
-            },
-          )
         ],
       ),
       body: CustomScrollView(
         slivers: [
+          SliverToBoxAdapter(
+            child: Consumer(
+              builder: (context, ref, _) {
+                final categoriesAsync = ref.watch(categoriesProvider);
+                final selectedFilters = ref.watch(dealerLeadFiltersProvider);
+                
+                return categoriesAsync.when(
+                  loading: () => const SizedBox(),
+                  error: (_, _) => const SizedBox(),
+                  data: (categories) {
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Row(
+                        children: [
+                          FilterChip(
+                            label: const Text('All'),
+                            selected: selectedFilters == null,
+                            onSelected: (val) => ref.read(dealerLeadFiltersProvider.notifier).setFilters(null),
+                          ),
+                          const SizedBox(width: 8),
+                          ...categories.map((cat) {
+                            final isSelected = selectedFilters?.contains(cat.id) ?? false;
+                            return Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: FilterChip(
+                                label: Text(cat.name),
+                                selected: isSelected,
+                                onSelected: (val) {
+                                  final current = selectedFilters ?? [];
+                                  if (val) {
+                                    ref.read(dealerLeadFiltersProvider.notifier).setFilters([...current, cat.id]);
+                                  } else {
+                                    ref.read(dealerLeadFiltersProvider.notifier).setFilters(
+                                      current.where((id) => id != cat.id).toList(),
+                                    );
+                                  }
+                                },
+                              ),
+                            );
+                          }),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16.0),

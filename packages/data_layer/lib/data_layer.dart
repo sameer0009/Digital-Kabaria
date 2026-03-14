@@ -9,3 +9,4 @@ export 'src/repositories/storage_repository.dart';
 export 'src/repositories/quote_repository.dart';
 export 'src/repositories/pickup_repository.dart';
 export 'src/repositories/transaction_repository.dart';
+export 'src/repositories/rating_repository.dart';
