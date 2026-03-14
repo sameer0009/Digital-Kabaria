@@ -1,0 +1,90 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && getUserData().role == 'admin';
+    }
+
+    function isDealer() {
+      return isSignedIn() && getUserData().role == 'dealer';
+    }
+
+    function isSeller() {
+      return isSignedIn() && getUserData().role == 'seller';
+    }
+
+    // Users
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && request.auth.uid == userId;
+      allow update: if isOwner(userId) || isAdmin();
+    }
+
+    // Categories
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+      
+      match /subcategories/{subId} {
+        allow read: if true;
+        allow write: if isAdmin();
+      }
+    }
+
+    // Listings
+    match /listings/{listingId} {
+      allow read: if isSignedIn();
+      allow create: if isSeller();
+      allow update: if (isOwner(resource.data.sellerId) && resource.data.status == 'submitted') || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Quotes
+    match /quotes/{quoteId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.dealerId) || 
+        isOwner(get(/databases/$(database)/documents/listings/$(resource.data.listingId)).data.sellerId) ||
+        isAdmin()
+      );
+      allow create: if isDealer();
+      allow update: if (isOwner(resource.data.dealerId) && resource.data.status == 'sent') || 
+                   isOwner(get(/databases/$(database)/documents/listings/$(resource.data.listingId)).data.sellerId) ||
+                   isAdmin();
+    }
+
+    // Pickup Orders
+    match /pickup_orders/{orderId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.sellerId) || 
+        isOwner(resource.data.dealerId) || 
+        isAdmin()
+      );
+      allow create: if isSignedIn(); // Usually triggered by Seller accepting quote
+      allow update: if isOwner(resource.data.dealerId) || isOwner(resource.data.sellerId) || isAdmin();
+    }
+
+    // Transactions
+    match /transactions/{transId} {
+      allow read: if isSignedIn() && (
+        isOwner(resource.data.sellerId) || 
+        isOwner(resource.data.dealerId) || 
+        isAdmin()
+      );
+      allow create: if isDealer() || isAdmin();
+      allow write: if isAdmin();
+    }
+  }
+}

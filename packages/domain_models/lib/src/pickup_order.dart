@@ -1,0 +1,25 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'pickup_order.freezed.dart';
+part 'pickup_order.g.dart';
+
+enum PickupStatus { awaitingSchedule, scheduled, enRoute, arrived, pickedUp, completed, cancelled }
+
+@freezed
+abstract class PickupOrder with _$PickupOrder {
+  const factory PickupOrder({
+    required String id,
+    required String listingId,
+    required String quoteId,
+    required String sellerId,
+    required String dealerId,
+    @Default(PickupStatus.awaitingSchedule) PickupStatus status,
+    String? scheduledTime,
+    double? actualWeight,
+    double? finalAmount,
+    @Default([]) List<String> otpTokens,
+    DateTime? createdAt,
+  }) = _PickupOrder;
+
+  factory PickupOrder.fromJson(Map<String, dynamic> json) => _$PickupOrderFromJson(json);
+}

@@ -1,0 +1,40 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+ios/.generated/
+android/.gradle/
+android/local.properties
+android/app/debug/
+android/app/profile/
+android/app/release/
+
+# Working directories
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.pyc
+logs
+*.log
+doc/api/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Flutter.framework
+ios/Flutter/App.framework
+ios/Flutter/engine_setup.sh
